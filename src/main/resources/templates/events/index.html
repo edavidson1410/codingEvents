@@ -1,24 +1,25 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org/">
-<head th:replace="fragments :: head"></head>
+<head th:replace="~{fragments :: head}"></head>
 <body class="container">
- <nav th:replace="fragments :: navigation"></nav>
- <h1>All Events</h1>
+
+<nav th:replace="~{fragments :: navigation}"></nav>
+<header th:replace="~{fragments :: header}"></header>
 
 <p th:unless="${events} and ${events.size()}">No events!</p>
 
 <table class="table table-striped">
     <thead>
         <tr>
+            <th>ID</th>
             <th>Name</th>
             <th>Description</th>
-            <th>Location</th>
         </tr>
     </thead>
     <tr th:each="event : ${events}">
-        <td th:text="${event.key}"></td>
-        <td th:text="${event.value}"></td>
-        <td th:replace="fragments :: address"></td>
+        <td th:text="${event.id}"></td>
+        <td th:text="${event.name}"></td>
+        <td th:text="${event.description}"></td>
     </tr>
 </table>
 </body>
