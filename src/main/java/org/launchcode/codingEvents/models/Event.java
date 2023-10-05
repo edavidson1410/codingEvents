@@ -1,8 +1,6 @@
 package org.launchcode.codingEvents.models;
 
-import jakarta.validation.constraints.Email;
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.Size;
+import jakarta.validation.constraints.*;
 
 import java.util.Objects;
 
@@ -22,9 +20,23 @@ public class Event {
     @Email(message = "Invalid email. Try Again.")
     private String contactEmail;
 
-    public Event(String name, String description, String contactEmail) {
+    @NotBlank(message = "Location must be specified.")
+    @NotNull
+    private String location;
+
+    @AssertTrue(message = "There must be preregistration.")
+    private boolean preRegister;
+
+    @Min(1)
+    private int attendanceNum;
+
+    public Event(String name, String description, String contactEmail, String location, boolean preRegister, int attendanceNum) {
         this.name = name;
         this.description = description;
+        this.contactEmail = contactEmail;
+        this.location = location;
+        this.preRegister = preRegister;
+        this.attendanceNum = attendanceNum;
         this.id = nextId;
         nextId++;
     }
@@ -57,6 +69,18 @@ public class Event {
 
     public void setContactEmail(String contactEmail) {
         this.contactEmail = contactEmail;
+    }
+
+    public String getLocation() {
+        return location;
+    }
+
+    public void setLocation(String location) {
+        this.location = location;
+    }
+
+    public boolean isPreRegister() {
+        return preRegister;
     }
 
     @Override
