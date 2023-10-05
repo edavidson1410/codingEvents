@@ -25,6 +25,24 @@
             </label>
             <p class="error" th:errors="${event.contactEmail}"></p>
         </div>
+        <div class="form-group">
+            <label>Location
+                <input th:field="${event.location}" class="form-control">
+            </label>
+            <p class="error" th:errors="${event.location}"></p>
+        </div>
+        <div class="form-group">
+            <label>Pre-Registration required
+                <input type="checkbox" th:field="${event.preRegister}">
+            </label>
+            <p class="error" th:errors="${event.preRegister}"></p>
+        </div>
+        <div class="form-group">
+            <label>Attendance Max
+                <input th:field="${event.attendance}" class="form-control">
+            </label>
+            <p class="error" th:errors="${event.attendance}"></p>
+        </div>
         <div class="form=group">
             <input type="submit" value="Create Event" class="btn btn-success">
         </div>

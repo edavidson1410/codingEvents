@@ -27,16 +27,17 @@ public class Event {
     @AssertTrue(message = "There must be preregistration.")
     private boolean preRegister;
 
+    @Positive
     @Min(1)
-    private int attendanceNum;
+    private int attendance;
 
-    public Event(String name, String description, String contactEmail, String location, boolean preRegister, int attendanceNum) {
+    public Event(String name, String description, String contactEmail, String location, boolean preRegister, int attendance) {
         this.name = name;
         this.description = description;
         this.contactEmail = contactEmail;
         this.location = location;
         this.preRegister = preRegister;
-        this.attendanceNum = attendanceNum;
+        this.attendance = attendance;
         this.id = nextId;
         nextId++;
     }
@@ -81,6 +82,18 @@ public class Event {
 
     public boolean isPreRegister() {
         return preRegister;
+    }
+
+    public void setPreRegister(boolean preRegister) {
+        this.preRegister = preRegister;
+    }
+
+    public int getAttendance() {
+        return attendance;
+    }
+
+    public void setAttendance(int attendance) {
+        this.attendance = attendance;
     }
 
     @Override
