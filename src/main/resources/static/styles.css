@@ -2,3 +2,10 @@ td, tr {
     text-alight: center;
 }
 
+body {
+    font-size: 14px;
+}
+
+.error {
+    color: red;
+}
