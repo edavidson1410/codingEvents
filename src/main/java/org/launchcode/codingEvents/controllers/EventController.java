@@ -2,8 +2,10 @@ package org.launchcode.codingEvents.controllers;
 
 import jakarta.validation.Valid;
 import org.launchcode.codingEvents.data.EventData;
+import org.launchcode.codingEvents.data.EventRepository;
 import org.launchcode.codingEvents.models.Event;
 import org.launchcode.codingEvents.models.EventType;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.Errors;
@@ -17,6 +19,9 @@ import java.util.List;
 //RequestMapping creates "prefix". Any GetMapping afterwards will be /prefix/getMapping
 @RequestMapping("events")
 public class EventController {
+//
+//    @Autowired
+//    private EventRepository eventRepository;
 
     @GetMapping
     public String displayAllEvents(Model model) {
