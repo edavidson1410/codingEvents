@@ -1,7 +1,6 @@
 package org.launchcode.codingEvents.controllers;
 
 import jakarta.validation.Valid;
-import org.launchcode.codingEvents.data.EventData;
 import org.launchcode.codingEvents.data.EventRepository;
 import org.launchcode.codingEvents.models.Event;
 import org.launchcode.codingEvents.models.EventType;
@@ -19,14 +18,14 @@ import java.util.List;
 //RequestMapping creates "prefix". Any GetMapping afterwards will be /prefix/getMapping
 @RequestMapping("events")
 public class EventController {
-//
-//    @Autowired
-//    private EventRepository eventRepository;
+
+    @Autowired
+    private EventRepository eventRepository;
 
     @GetMapping
     public String displayAllEvents(Model model) {
         model.addAttribute("title", "All Events");
-        model.addAttribute("events", EventData.getAll());
+        model.addAttribute("events", eventRepository.findAll());
         return "events/index";
     }
 
@@ -47,14 +46,14 @@ public class EventController {
             model.addAttribute("title", "Create Event");
             return"events/create";
         }
-        EventData.add(newEvent);
+        eventRepository.save(newEvent);
         return "redirect:/events";
     }
 
     @GetMapping("delete")
     public String displayDeleteEventForm(Model model) {
         model.addAttribute("title", "Delete Events");
-        model.addAttribute("events", EventData.getAll());
+        model.addAttribute("events", eventRepository.findAll());
         return "events/delete";
     }
 
@@ -62,7 +61,7 @@ public class EventController {
     public String processDeleteEventsForm(@RequestParam(required = false) int[] eventIds) {
         if(eventIds != null) {
             for (int id : eventIds) {
-                EventData.remove(id);
+                eventRepository.deleteById(id);
             }
         }
         return "redirect:/events";
