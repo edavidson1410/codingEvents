@@ -2,8 +2,9 @@ package org.launchcode.codingEvents.controllers;
 
 import jakarta.validation.Valid;
 import org.launchcode.codingEvents.data.EventRepository;
+import org.launchcode.codingEvents.data.EventCategoryRepository;
 import org.launchcode.codingEvents.models.Event;
-import org.launchcode.codingEvents.models.EventType;
+import org.launchcode.codingEvents.models.EventCategory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -13,6 +14,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Optional;
 
 @Controller
 //RequestMapping creates "prefix". Any GetMapping afterwards will be /prefix/getMapping
@@ -22,10 +24,26 @@ public class EventController {
     @Autowired
     private EventRepository eventRepository;
 
-    @GetMapping
-    public String displayAllEvents(Model model) {
-        model.addAttribute("title", "All Events");
-        model.addAttribute("events", eventRepository.findAll());
+    @Autowired
+    private EventCategoryRepository eventCategoryRepository;
+
+    @GetMapping("")
+    public String displayEvents(@RequestParam(required = false) Integer categoryId, Model model) {
+
+        if (categoryId == null) {
+            model.addAttribute("title", "All Events");
+            model.addAttribute("events", eventRepository.findAll());
+        } else {
+            Optional<EventCategory> result = eventCategoryRepository.findById(categoryId);
+            if (result.isEmpty()) {
+                model.addAttribute("title", "Invalid Category ID: " + categoryId);
+            } else {
+                EventCategory category = result.get();
+                model.addAttribute("title", "Events in category: " + category.getName());
+                model.addAttribute("events", category.getEvents());
+            }
+        }
+
         return "events/index";
     }
 
@@ -34,7 +52,7 @@ public class EventController {
     public String renderCreateEventForm(Model model) {
         model.addAttribute("title", "Create Event");
         model.addAttribute(new Event());
-        model.addAttribute("types", EventType.values());
+        model.addAttribute("categories", eventCategoryRepository.findAll());
         return "events/create";
     }
 
