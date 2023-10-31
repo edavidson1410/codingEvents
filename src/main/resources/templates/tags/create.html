@@ -6,16 +6,15 @@
 <nav th:replace="~{fragments :: navigation}"></nav>
 <header th:replace="~{fragments :: header}"></header>
 
-
 <form method="post">
     <div class="form-group">
-        <label>Event Category
-            <input th:field="${eventCategory.name}" class="form-control">
+        <label>Name
+            <input th:field="${tag.name}" class="form-control">
         </label>
+        <span th:errors="${tag.name}" class="error"></span>
     </div>
-    <div class="form=group">
-        <input type="submit" value="Create Event" class="btn btn-success">
-    </div>
+    <input type="submit" value="Create" class="btn btn-primary">
 </form>
+
 </body>
 </html>
